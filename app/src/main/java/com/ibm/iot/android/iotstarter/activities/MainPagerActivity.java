@@ -15,7 +15,10 @@
  *******************************************************************************/
 package com.ibm.iot.android.iotstarter.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,14 +28,18 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.ibm.iot.android.iotstarter.IoTStarterApplication;
 import com.ibm.iot.android.iotstarter.R;
 import com.ibm.iot.android.iotstarter.fragments.IoTPagerFragment;
 import com.ibm.iot.android.iotstarter.fragments.LogPagerFragment;
 import com.ibm.iot.android.iotstarter.fragments.LoginPagerFragment;
+import com.ibm.iot.android.iotstarter.receivers.MyBroadcastReceiver;
 import com.ibm.iot.android.iotstarter.utils.Constants;
 import com.ibm.iot.android.iotstarter.views.DrawingView;
+
+
 
 /**
  * TutorialActivity provides a ViewPager with a few Fragments that provide
@@ -40,13 +47,16 @@ import com.ibm.iot.android.iotstarter.views.DrawingView;
  */
 public class MainPagerActivity extends FragmentActivity {
     public static final String TAG = MainPagerActivity.class.getName();
-
+    public MyBroadcastReceiver myReceiver;
     private ViewPager pager;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_pagertabs);
+
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
@@ -58,6 +68,16 @@ public class MainPagerActivity extends FragmentActivity {
         }
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        // listen to a broadcast from OpenXC Enabler App
+        IntentFilter filter = new IntentFilter("com.pkg.perform.Ruby");
+        myReceiver = MyBroadcastReceiver.getInstance();
+        if(filter!=null)
+        {
+            registerReceiver(myReceiver,filter);
+            Log.d("registration", "BR registered");
+        }
+
     }
 
     @Override

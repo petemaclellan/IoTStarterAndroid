@@ -28,6 +28,7 @@ import android.widget.*;
 
 import com.ibm.iot.android.iotstarter.IoTStarterApplication;
 import com.ibm.iot.android.iotstarter.R;
+import com.ibm.iot.android.iotstarter.receivers.MyBroadcastReceiver;
 import com.ibm.iot.android.iotstarter.utils.Constants;
 import com.ibm.iot.android.iotstarter.iot.IoTDevice;
 
@@ -49,12 +50,14 @@ public class ProfilesActivity extends Activity {
      * Activity functions for establishing the activity
      **************************************************************************/
 
+
+
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, ".onCreate() entered");
+        Log.d(TAG, "ProfilesActivity.onCreate() entered");
 
         super.onCreate(savedInstanceState);
 

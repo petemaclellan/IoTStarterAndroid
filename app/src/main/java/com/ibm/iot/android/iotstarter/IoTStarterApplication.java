@@ -82,6 +82,7 @@ public class IoTStarterApplication extends Application {
     public void onCreate() {
         Log.d(TAG, ".onCreate() entered");
         super.onCreate();
+        Log.d("bro", "IOTSTARTER");
 
         settings = getSharedPreferences(Constants.SETTINGS, 0);
 

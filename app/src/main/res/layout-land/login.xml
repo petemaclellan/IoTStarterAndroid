@@ -59,6 +59,7 @@
                 android:hint="@string/organization_value"
                 android:inputType="text"
                 android:id="@+id/organizationValue"
+                android:text="w5elzv"
                 />
         </LinearLayout>
         <LinearLayout android:layout_width="wrap_content"
@@ -90,6 +91,7 @@
                 android:hint="@string/device_id_value"
                 android:inputType="text"
                 android:id="@+id/deviceIDValue"
+                android:text="petephone"
                 />
         </LinearLayout>
         <LinearLayout android:layout_width="wrap_content"
@@ -121,6 +123,7 @@
                 android:hint="@string/auth_token_value"
                 android:inputType="textPassword"
                 android:id="@+id/authTokenValue"
+                android:text="thisispetephone"
                 />
         <Button
                 style="@style/SmallButton"

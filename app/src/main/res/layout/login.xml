@@ -55,6 +55,7 @@
                 android:hint="@string/organization_value"
                 android:inputType="textNoSuggestions"
                 android:id="@+id/organizationValue"
+                android:text="ilhenh"
                 />
         <TextView
                 style="@style/MyActionBarTitleText"
@@ -81,6 +82,7 @@
                 android:hint="@string/device_id_value"
                 android:inputType="textNoSuggestions"
                 android:id="@+id/deviceIDValue"
+                android:text="petephone"
                 />
         <TextView
                 style="@style/MyActionBarTitleText"
@@ -108,6 +110,7 @@
                 android:hint="@string/auth_token_value"
                 android:inputType="textPassword"
                 android:id="@+id/authTokenValue"
+                android:text="petephone"
                 />
         <Button
                 style="@style/SmallButton"

@@ -24,6 +24,8 @@ import android.hardware.SensorManager;
 import android.util.Log;
 import com.ibm.iot.android.iotstarter.IoTStarterApplication;
 import com.ibm.iot.android.iotstarter.iot.IoTClient;
+import com.ibm.iot.android.iotstarter.receivers.MyBroadcastReceiver;
+
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.util.Timer;
@@ -150,6 +152,7 @@ public class DeviceSensor implements SensorEventListener {
         @Override
         public void run() {
             Log.v(TAG, "SendTimerTask.run() entered");
+            MyBroadcastReceiver myReceiver = MyBroadcastReceiver.getInstance();
 
             double lon = 0.0;
             double lat = 0.0;
@@ -157,7 +160,9 @@ public class DeviceSensor implements SensorEventListener {
                 lon = app.getCurrentLocation().getLongitude();
                 lat = app.getCurrentLocation().getLatitude();
             }
-            String messageData = MessageFactory.getAccelMessage(G, O, yaw, lon, lat);
+//            String messageData = MessageFactory.getAccelMessage(G, O, yaw, lon, lat);
+            String messageData = myReceiver.getPayload();
+            myReceiver.clearPayload();
 
             try {
                 // create ActionListener to handle message published results
@@ -166,7 +171,10 @@ public class DeviceSensor implements SensorEventListener {
                 if (app.getConnectionType() == Constants.ConnectionType.QUICKSTART) {
                     iotClient.publishEvent(Constants.STATUS_EVENT, "json", messageData, 0, false, listener);
                 } else {
-                    iotClient.publishEvent(Constants.ACCEL_EVENT, "json", messageData, 0, false, listener);
+                    //iotClient.publishEvent(Constants.ACCEL_EVENT, "json", messageData, 0, false, listener);
+                    if (!messageData.equals("")) {
+                        iotClient.publishEvent(Constants.TELEMATICS_EVENT, "json", messageData, 0, false, listener);
+                    }
                 }
 
                 int count = app.getPublishCount();
