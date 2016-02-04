@@ -43,6 +43,19 @@ public class MessageFactory {
                 "} }";
     }
 
+    public static String getAccelMessage2(float G[], float O[], float yaw, double lon, double lat) {
+        return " \"sensor_data\": {" +
+                "\"acceleration_x\":" + G[0] + ", " +
+                "\"acceleration_y\":" + G[1] + ", " +
+                "\"acceleration_z\":" + G[2] + ", " +
+                "\"roll\":" + O[2] + ", " +
+                "\"pitch\":" + O[1] + ", " +
+                "\"yaw\":" + yaw + ", " +
+                "\"lon\":" + lon + ", " +
+                "\"lat\":" + lat + " " +
+                "}";
+    }
+
     /**
      * Construct a JSON formatted string text event message
      * @param text String of text message to send

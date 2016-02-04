@@ -44,7 +44,7 @@ public class Constants {
     public final static String AUTH_TOKEN = "authtoken";
     public final static String DEVICE_ID = "deviceid";
     public final static String ORGANIZATION = "organization";
-    public final static String DEVICE_TYPE = "android";
+    public final static String DEVICE_TYPE = "Dongle";
 
     // IoT events and commands
     public final static String ACCEL_EVENT = "accel";
