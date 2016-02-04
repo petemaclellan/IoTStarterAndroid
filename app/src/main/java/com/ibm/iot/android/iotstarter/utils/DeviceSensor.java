@@ -168,45 +168,34 @@ public class DeviceSensor implements SensorEventListener {
                 lon = app.getCurrentLocation().getLongitude();
                 lat = app.getCurrentLocation().getLatitude();
             }
-            String messageDataAccel = MessageFactory.getAccelMessage(G, O, yaw, lon, lat);
-            Log.d(TAG, "messageData is: " + messageDataAccel);
-            // { "d": {"acceleration_x":-0.055066638, "acceleration_y":0.025139118, "acceleration_z":9.421184, "roll":0.0058449144, "pitch":-0.002668309, "yaw":2.3841858E-6, "lon":0.0, "lat":0.0 } }
+
+            String messageDataAccel = MessageFactory.getAccelMessage2(G, O, yaw, lon, lat);
+            String newMessage = new StringBuilder(messageData).insert(messageData.length() - 2, messageDataAccel).toString();
 
             try {
                 // create ActionListener to handle message published results
                 MyIoTActionListener listener = new MyIoTActionListener(context, Constants.ActionStateStatus.PUBLISH);
                 IoTClient iotClient = IoTClient.getInstance(context);
-                if (app.getConnectionType() == Constants.ConnectionType.QUICKSTART) {
-                    iotClient.publishEvent(Constants.STATUS_EVENT, "json", messageData, 0, false, listener);
-                } else {
-                    //iotClient.publishEvent(Constants.ACCEL_EVENT, "json", messageData, 0, false, listener);
-                    if (!messageData.equals("")) {
-                        iotClient.publishEvent(Constants.TELEMATICS_EVENT, "json", messageData, 0, false, listener);
-                        Log.d("JEEZY", messageData);
-                    }
+
+                if (!messageData.equals("")) {
+                    iotClient.publishEvent(Constants.TELEMATICS_EVENT, "json", newMessage, 0, false, listener);
                 }
 
                 int count = app.getPublishCount();
                 app.setPublishCount(++count);
 
-                //String runningActivity = app.getCurrentRunningActivity();
-                //if (runningActivity != null && runningActivity.equals(IoTPagerFragment.class.getName())) {
-                    Intent actionIntent = new Intent(Constants.APP_ID + Constants.INTENT_IOT);
-                    actionIntent.putExtra(Constants.INTENT_DATA, Constants.INTENT_DATA_PUBLISHED);
-                    context.sendBroadcast(actionIntent);
-                //}
+                Intent actionIntent = new Intent(Constants.APP_ID + Constants.INTENT_IOT);
+                actionIntent.putExtra(Constants.INTENT_DATA, Constants.INTENT_DATA_PUBLISHED);
+                context.sendBroadcast(actionIntent);
             } catch (MqttException e) {
                 Log.d(TAG, ".run() received exception on publishEvent()");
             }
 
             app.setAccelData(G);
 
-            //String runningActivity = app.getCurrentRunningActivity();
-            //if (runningActivity != null && runningActivity.equals(IoTPagerFragment.class.getName())) {
-                Intent actionIntent = new Intent(Constants.APP_ID + Constants.INTENT_IOT);
-                actionIntent.putExtra(Constants.INTENT_DATA, Constants.ACCEL_EVENT);
-                context.sendBroadcast(actionIntent);
-            //}
+            Intent actionIntent = new Intent(Constants.APP_ID + Constants.INTENT_IOT);
+            actionIntent.putExtra(Constants.INTENT_DATA, Constants.ACCEL_EVENT);
+            context.sendBroadcast(actionIntent);
         }
     }
 }
