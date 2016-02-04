@@ -14,7 +14,7 @@ release
 assets
 tokens.xml
 local.properties
-.idea/*
+.idea/
 
 
 # Built application files
