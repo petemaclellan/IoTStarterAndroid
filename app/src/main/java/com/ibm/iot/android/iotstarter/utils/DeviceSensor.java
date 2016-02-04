@@ -152,7 +152,15 @@ public class DeviceSensor implements SensorEventListener {
         @Override
         public void run() {
             Log.v(TAG, "SendTimerTask.run() entered");
-            MyBroadcastReceiver myReceiver = MyBroadcastReceiver.getInstance();
+
+            MyBroadcastReceiver broadcastReceiver = MyBroadcastReceiver.getInstance();
+
+            String messageData = broadcastReceiver.getPayload();
+            if (messageData == "") {
+                Log.d("JESUS", "payload is empty");
+                return;
+            }
+            broadcastReceiver.clearPayload();
 
             double lon = 0.0;
             double lat = 0.0;
@@ -160,9 +168,9 @@ public class DeviceSensor implements SensorEventListener {
                 lon = app.getCurrentLocation().getLongitude();
                 lat = app.getCurrentLocation().getLatitude();
             }
-//            String messageData = MessageFactory.getAccelMessage(G, O, yaw, lon, lat);
-            String messageData = myReceiver.getPayload();
-            myReceiver.clearPayload();
+            String messageDataAccel = MessageFactory.getAccelMessage(G, O, yaw, lon, lat);
+            Log.d(TAG, "messageData is: " + messageDataAccel);
+            // { "d": {"acceleration_x":-0.055066638, "acceleration_y":0.025139118, "acceleration_z":9.421184, "roll":0.0058449144, "pitch":-0.002668309, "yaw":2.3841858E-6, "lon":0.0, "lat":0.0 } }
 
             try {
                 // create ActionListener to handle message published results
@@ -174,6 +182,7 @@ public class DeviceSensor implements SensorEventListener {
                     //iotClient.publishEvent(Constants.ACCEL_EVENT, "json", messageData, 0, false, listener);
                     if (!messageData.equals("")) {
                         iotClient.publishEvent(Constants.TELEMATICS_EVENT, "json", messageData, 0, false, listener);
+                        Log.d("JEEZY", messageData);
                     }
                 }
 

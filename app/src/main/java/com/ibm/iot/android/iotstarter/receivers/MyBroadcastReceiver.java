@@ -9,15 +9,13 @@ import android.util.Log;
 /**
  * Created by mlgpmacl on 1/27/2016.
  */
-public class MyBroadcastReceiver extends BroadcastReceiver
-{
+public class MyBroadcastReceiver extends BroadcastReceiver {
 
     private String payload = "";
     private static MyBroadcastReceiver instance = null;
 
     public MyBroadcastReceiver() {
         super();
-        Log.d("CONSTRUCT", "we did it!");
         instance = this;
     }
 
@@ -26,19 +24,6 @@ public class MyBroadcastReceiver extends BroadcastReceiver
             return instance;
         } else {
             return new MyBroadcastReceiver();
-//            return instance;
-        }
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        Bundle extras = intent.getExtras();
-        String newString = extras.getString("VehicleData");
-        if (newString != null) {
-            Log.d("...", newString);
-            payload += " " + newString;
-        } else {
-            Log.d("...", "nuthin");
         }
     }
 
@@ -49,4 +34,14 @@ public class MyBroadcastReceiver extends BroadcastReceiver
     public void clearPayload() {
         this.payload = "";
     }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Bundle extras = intent.getExtras();
+        String newString = extras.getString("VehicleData");
+        if (newString != null) {
+            this.payload = newString;
+        }
+    }
+
 }
