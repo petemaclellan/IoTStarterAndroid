@@ -73,11 +73,23 @@ public class DeviceSensor implements SensorEventListener {
     public void enableSensor() {
         Log.i(TAG, ".enableSensor() entered");
         if (!isEnabled) {
+//            subscribeToDongleAlert();
             sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
             sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_NORMAL);
             timer = new Timer();
             timer.scheduleAtFixedRate(new SendTimerTask(), 1000, 1000);
             isEnabled = true;
+        }
+    }
+
+    private void subscribeToDongleAlert() {
+        Log.d("DongleAlert", "yep.");
+        MyIoTActionListener listener = new MyIoTActionListener(context, Constants.ActionStateStatus.SUBSCRIBE);
+        IoTClient iotClient = IoTClient.getInstance(context);
+        try {
+            iotClient.subscribeToEvent(Constants.DONGLE_ALERT_EVENT, "json", 0, context, listener);
+        } catch (MqttException e) {
+            Log.d("Connection Exception", e.getMessage());
         }
     }
 
