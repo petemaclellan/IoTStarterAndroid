@@ -114,7 +114,7 @@ public class MyIoTActionListener implements IoTActionListener {
             try {
                 MyIoTActionListener listener = new MyIoTActionListener(context, Constants.ActionStateStatus.PUBLISH);
                 IoTClient iotClient = IoTClient.getInstance(context);
-                iotClient.subscribeToCommand("+", "json", 0, "subscribe", listener);
+                iotClient.subscribeToCommand(Constants.DONGLE_ALERT_EVENT, "json", 0, "subscribe", listener);
             } catch (MqttException e) {
                 Log.d(TAG, ".handleConnectSuccess() received exception on subscribeToCommand()");
             }
