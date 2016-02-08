@@ -31,8 +31,8 @@ public class IoTClient {
     private static final String TAG = IoTClient.class.getName();
     private static final String IOT_ORGANIZATION_TCP = ".messaging.internetofthings.ibmcloud.com:1883";
     private static final String IOT_ORGANIZATION_SSL = ".messaging.internetofthings.ibmcloud.com:8883";
-    private static final String IOT_DEVICE_USERNAME  = "use-token-auth";
-//    private static final String IOT_DEVICE_USERNAME = "a-weomar-9nqnabfmmj";
+//    private static final String IOT_DEVICE_USERNAME  = "use-token-auth";
+    private static final String IOT_DEVICE_USERNAME = "a-weomar-dtyyshs79v";
 
     private static IoTClient instance;
     private MqttAndroidClient client;
@@ -105,8 +105,8 @@ public class IoTClient {
      */
     public IMqttToken connectDevice(IoTCallbacks callbacks, IoTActionListener listener, SocketFactory factory) throws MqttException {
         Log.d(TAG, ".connectDevice() entered");
-        String clientID = "d:" + this.getOrganization() + ":" + this.getDeviceType() + ":" + this.getDeviceID();
-//        String clientID = "a:" + this.getOrganization() + ":peteAndroidApp";
+//        String clientID = "d:" + this.getOrganization() + ":" + this.getDeviceType() + ":" + this.getDeviceID();
+        String clientID = "a:" + this.getOrganization() + ":peteAndroidApp";
         String connectionURI;
         if (factory == null || this.getOrganization().equals("quickstart")) {
             connectionURI = "tcp://" + this.getOrganization() + IOT_ORGANIZATION_TCP;
@@ -398,7 +398,8 @@ public class IoTClient {
      * @return The event topic for the specified event string
      */
     public static String getEventTopic(String event, String format) {
-        return "iot-2/evt/" + event + "/fmt/json";
+//        return "iot-2/evt/" + event + "/fmt/json";
+        return "iot-2/type/Dongle/id/ABC12345/evt/" + event + "/fmt/json";
     }
 
     /**
@@ -408,7 +409,8 @@ public class IoTClient {
      * @return The command topic for the specified command string
      */
     public static String getCommandTopic(String command, String format) {
-        return "iot-2/cmd/" + command + "/fmt/json";
+        // iot-2/type/Dongle/id/${DONGLE_ID}/cmd/dongleAlert/fmt/json
+        return "iot-2/type/Dongle/id/ABC12345/cmd/" + command + "/fmt/json";
     }
 
     public String getAuthorizationToken() {

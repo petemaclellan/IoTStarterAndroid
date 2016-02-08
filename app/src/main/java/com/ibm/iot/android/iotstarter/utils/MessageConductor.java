@@ -61,6 +61,7 @@ public class MessageConductor {
      */
     public void steerMessage(String payload, String topic) throws JSONException {
         Log.d(TAG, ".steerMessage() entered");
+        Log.d("SHMINGLE", topic);
         JSONObject top = new JSONObject(payload);
         JSONObject d = top.getJSONObject("d");
 

@@ -110,7 +110,7 @@
                 android:hint="@string/auth_token_value"
                 android:inputType="textPassword"
                 android:id="@+id/authTokenValue"
-                android:text="petephone"
+                android:text="sOtaeFPJpIs7qOnMIY"
                 />
         <Button
                 style="@style/SmallButton"
