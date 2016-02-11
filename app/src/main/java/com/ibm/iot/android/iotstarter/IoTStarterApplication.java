@@ -85,9 +85,11 @@ public class IoTStarterApplication extends Application {
 
         settings = getSharedPreferences(Constants.SETTINGS, 0);
 
-        if (settings.getString("TUTORIAL_SHOWN", null) != null) {
-            tutorialShown = true;
-        }
+//        if (settings.getString("TUTORIAL_SHOWN", null) != null) {
+//            tutorialShown = true;
+//        }
+        // tutorial will always be shown for now.
+        tutorialShown = true;
 
         myIoTCallbacks = MyIoTCallbacks.getInstance(this);
 
