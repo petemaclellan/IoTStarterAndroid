@@ -82,7 +82,6 @@
                 android:hint="@string/device_id_value"
                 android:inputType="textNoSuggestions"
                 android:id="@+id/deviceIDValue"
-                android:text="petephone"
                 />
         <TextView
                 style="@style/MyActionBarTitleText"
@@ -110,7 +109,6 @@
                 android:hint="@string/auth_token_value"
                 android:inputType="textPassword"
                 android:id="@+id/authTokenValue"
-                android:text="petephone"
                 />
         <Button
                 style="@style/SmallButton"
@@ -124,7 +122,6 @@
                 android:layout_gravity="center"
                 android:text="@string/useSSL_button"
                 android:checked="true"/>
-                <!--android:onClick="onCheckboxClicked"/-->
         <TextView
                 style="@style/MyActionBarTitleText"
                 android:layout_width="wrap_content"
