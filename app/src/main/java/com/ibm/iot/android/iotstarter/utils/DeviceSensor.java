@@ -22,7 +22,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.ibm.iot.android.iotstarter.IoTStarterApplication;
 import com.ibm.iot.android.iotstarter.iot.IoTClient;
@@ -164,7 +163,6 @@ public class DeviceSensor implements SensorEventListener {
                 timeoutCounter += 1;
                 if (timeoutCounter > 10) {
                     Log.d(TAG, "timeout disconnect");
-                    //Toast.makeText(context, "Dongle signal lost, DISCONNECTING...", Toast.LENGTH_LONG).show();
                     disableSensor();
                     try {
                         IoTClient iotClient = IoTClient.getInstance(context);
