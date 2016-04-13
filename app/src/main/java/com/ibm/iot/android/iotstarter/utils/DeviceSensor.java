@@ -22,6 +22,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
+
 import com.ibm.iot.android.iotstarter.IoTStarterApplication;
 import com.ibm.iot.android.iotstarter.iot.IoTClient;
 import com.ibm.iot.android.iotstarter.receivers.MyBroadcastReceiver;
@@ -46,6 +47,7 @@ public class DeviceSensor implements SensorEventListener {
     private final Context context;
     private Timer timer;
     private boolean isEnabled = false;
+    private int timeoutCounter = 0;
 
     private DeviceSensor(Context context) {
         this.context = context;
@@ -157,8 +159,23 @@ public class DeviceSensor implements SensorEventListener {
 
             String messageData = broadcastReceiver.getPayload();
             if (messageData == "") {
-                Log.d("JESUS", "payload is empty");
+                Log.d(TAG, "payload is empty");
+                timeoutCounter += 1;
+                if (timeoutCounter > 10) {
+                    Log.d(TAG, "timeout disconnect");
+                    disableSensor();
+                    try {
+                        IoTClient iotClient = IoTClient.getInstance(context);
+                        MyIoTActionListener listener = new MyIoTActionListener(context, Constants.ActionStateStatus.DISCONNECTING);
+                        iotClient.disconnectDevice(listener);
+                    } catch (MqttException e) {
+                        // Disconnect failed
+                    }
+                    timeoutCounter = 0;
+                }
                 return;
+            } else {
+                timeoutCounter = 0;
             }
             broadcastReceiver.clearPayload();
 
