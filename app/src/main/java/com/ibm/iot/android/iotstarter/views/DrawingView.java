@@ -151,38 +151,6 @@ public class DrawingView extends View {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.v(TAG, ".onTouchEvent() entered");
-
-        if (app.getConnectionType() == Constants.ConnectionType.QUICKSTART) {
-            return true;
-        }
-
-        //detect user touch
-        float touchX = event.getX();
-
-        float touchY = event.getY();
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                previousX = touchX;
-                previousY = touchY;
-                //drawPath.moveTo(touchX, touchY);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                publishTouchMove(touchX, touchY, false);
-                //drawPath.lineTo(touchX, touchY);
-                break;
-            case MotionEvent.ACTION_UP:
-                publishTouchMove(touchX, touchY, true);
-                drawPath.reset();
-                drawCanvas.drawColor(app.getColor());
-                break;
-            default:
-                return false;
-        }
-
-        invalidate();
-
         return true;
     }
 
