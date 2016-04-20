@@ -206,6 +206,8 @@ public class LoginPagerFragment extends IoTStarterPagerFragment {
      * @return True if properties are set, false otherwise.
      */
     private boolean checkCanConnect() {
+        if (app.getOrganization() == null) return false;
+
         if (app.getOrganization().equals(Constants.QUICKSTART)) {
             app.setConnectionType(Constants.ConnectionType.QUICKSTART);
             if (app.getDeviceId() == null || app.getDeviceId().equals("")) {

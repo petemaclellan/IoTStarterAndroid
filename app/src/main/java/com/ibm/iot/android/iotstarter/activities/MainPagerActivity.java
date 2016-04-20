@@ -77,7 +77,6 @@ public class MainPagerActivity extends FragmentActivity {
             registerReceiver(myReceiver,filter);
             Log.d("registration", "BR registered");
         }
-
     }
 
     @Override

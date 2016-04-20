@@ -22,6 +22,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.ibm.iot.android.iotstarter.IoTStarterApplication;
 import com.ibm.iot.android.iotstarter.iot.IoTClient;
@@ -163,6 +164,7 @@ public class DeviceSensor implements SensorEventListener {
                 timeoutCounter += 1;
                 if (timeoutCounter > 10) {
                     Log.d(TAG, "timeout disconnect");
+                    Toast.makeText(context, "Data timeout, disconnecting...", Toast.LENGTH_LONG).show();
                     disableSensor();
                     try {
                         IoTClient iotClient = IoTClient.getInstance(context);
@@ -187,7 +189,7 @@ public class DeviceSensor implements SensorEventListener {
             }
 
             String messageDataAccel = MessageFactory.getAccelMessage2(G, O, yaw, lon, lat);
-            String newMessage = new StringBuilder(messageData).insert(messageData.length() - 2, messageDataAccel).toString();
+            String newMessage = new StringBuilder(messageData).insert(messageData.length() - 2, ", " + messageDataAccel).toString();
 
             try {
                 // create ActionListener to handle message published results
@@ -196,10 +198,9 @@ public class DeviceSensor implements SensorEventListener {
 
                 if (!messageData.equals("")) {
                     iotClient.publishEvent(Constants.TELEMATICS_EVENT, "json", newMessage, 0, false, listener);
+                    int count = app.getPublishCount();
+                    app.setPublishCount(++count);
                 }
-
-                int count = app.getPublishCount();
-                app.setPublishCount(++count);
 
                 Intent actionIntent = new Intent(Constants.APP_ID + Constants.INTENT_IOT);
                 actionIntent.putExtra(Constants.INTENT_DATA, Constants.INTENT_DATA_PUBLISHED);
