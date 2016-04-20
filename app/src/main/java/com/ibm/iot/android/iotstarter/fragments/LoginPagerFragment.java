@@ -27,6 +27,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.android.gms.security.ProviderInstaller;
 import com.ibm.iot.android.iotstarter.IoTStarterApplication;
 import com.ibm.iot.android.iotstarter.R;
@@ -93,6 +95,13 @@ public class LoginPagerFragment extends IoTStarterPagerFragment {
 
         // initialise
         initializeLoginActivity();
+
+        if (checkCanConnect()) {
+            Toast.makeText(getActivity(), "Connecting to server...", Toast.LENGTH_SHORT).show();
+            handleActivate();
+        } else {
+            Toast.makeText(getActivity(), "Please fill in your credentials.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
